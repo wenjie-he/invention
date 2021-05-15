@@ -6,13 +6,16 @@ srcs = src/impl.cpp src/interface.cpp
 objs = ${build_dir}/src/impl.o \
 	   ${build_dir}/src/interface.o
 .PHONY : target_all init_dir
-target_all : init_dir libinvent.a
+target_all : init_dir output/lib/libinvent.a
 init_dir : 
 	-mkdir -p ${build_dir}
 	-mkdir -p ${build_dir}/src
+	-mkdir -p ${project_dir}/deploy
+	-mkdir -p ${project_dir}/output
+	-cp -r ${project_dir}/deploy/* ${project_dir}/output/
 
-libinvent.a : ${objs} init_dir
-	ar cr libinvent.a -o ${objs}
+output/lib/libinvent.a : ${objs} init_dir
+	ar cr output/lib/libinvent.a -o ${objs}
 
 ${build_dir}/src/impl.o : src/impl.cpp src/impl.h
 	g++ -c src/impl.cpp -o ${build_dir}/src/impl.o -I ./
