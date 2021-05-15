@@ -5,8 +5,13 @@ output_dir = ./output/
 srcs = src/impl.cpp src/interface.cpp
 objs = ${build_dir}/src/impl.o \
 	   ${build_dir}/src/interface.o
+.PHONY : target_all init_dir
+target_all : init_dir libinvent.a
+init_dir : 
+	-mkdir -p ${build_dir}
+	-mkdir -p ${build_dir}/src
 
-libinvent.a : ${objs}
+libinvent.a : ${objs} init_dir
 	ar cr libinvent.a -o ${objs}
 
 ${build_dir}/src/impl.o : src/impl.cpp src/impl.h
