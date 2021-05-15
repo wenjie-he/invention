@@ -17,9 +17,9 @@ init_dir :
 output/lib/libinvent.a : ${objs} init_dir
 	ar cr output/lib/libinvent.a -o ${objs}
 
-${build_dir}/src/impl.o : src/impl.cpp src/impl.h
+${build_dir}/src/impl.o : src/impl.cpp
 	g++ -c src/impl.cpp -o ${build_dir}/src/impl.o -I ./
-${build_dir}/src/interface.o : src/interface.cpp src/interface.h
+${build_dir}/src/interface.o : src/interface.cpp
 	g++ -c src/interface.cpp -o ${build_dir}/src/interface.o -I ./
 
 -include ${build_dir}/header.depend
@@ -28,4 +28,4 @@ ${build_dir}/header.depend : ${srcs}
 
 .PHONY:clean
 clean:
-	rm -fr libinvent.a ${objs}
+	-rm -fr output/lib/libinvent.a ${objs} ${build_dir}/header.depend

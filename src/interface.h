@@ -1,6 +1,8 @@
 #include <string>
 #include <iostream>
 
+namespace invention {
+
 class Interface {
 public:
     Interface();
@@ -12,10 +14,11 @@ private:
     int b;
 };
 
-class test {
+}
+/*class test {
 public:
     test() {}
     ~test() {}
 private:
 
-};
+};*/

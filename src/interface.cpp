@@ -12,6 +12,7 @@ Interface::~Interface() {
 
 }
 
+
 void Interface::get_input() {
     a += rand();
     b += rand();
