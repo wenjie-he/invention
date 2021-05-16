@@ -2,6 +2,8 @@
 
 #include "stdlib.h"
 
+namespace invention {
+
 Interface::Interface() :
     a(1),
     b(0) {
@@ -17,4 +19,6 @@ void Interface::get_input() {
     a += rand();
     b += rand();
     return;
+}
+
 }

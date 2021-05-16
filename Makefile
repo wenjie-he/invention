@@ -15,7 +15,9 @@ init_dir :
 	-cp -r ${project_dir}/deploy/* ${project_dir}/output/
 
 output/lib/libinvent.a : ${objs} init_dir
-	ar cr output/lib/libinvent.a -o ${objs}
+	-ar cr output/lib/libinvent.a -o ${objs}
+	-cp -p ./src/interface.h output/include/
+	-cp -p ./src/impl.h output/include/
 
 ${build_dir}/src/impl.o : src/impl.cpp
 	g++ -c src/impl.cpp -o ${build_dir}/src/impl.o -I ./
@@ -28,4 +30,4 @@ ${build_dir}/header.depend : ${srcs}
 
 .PHONY:clean
 clean:
-	-rm -fr output/lib/libinvent.a ${objs} ${build_dir}/header.depend
+	-rm -fr output/ ${objs} ${build_dir}/header.depend
