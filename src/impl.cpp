@@ -1,4 +1,5 @@
 #include "src/impl.h"
+#include "src/a.h"
 
 namespace invention {
 

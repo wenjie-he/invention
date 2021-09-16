@@ -3,31 +3,23 @@ project_dir = ./
 output_dir = ./output/
 
 srcs = src/impl.cpp src/interface.cpp
-objs = ${build_dir}/src/impl.o \
-	   ${build_dir}/src/interface.o
+objs = $(foreach n, $(srcs), $(n).o)
+deps = $(foreach n, $(srcs), $(n).d)
+
 .PHONY : target_all init_dir
 target_all : init_dir output/lib/libinvent.a
 init_dir : 
-	-mkdir -p ${build_dir}
-	-mkdir -p ${build_dir}/src
-	-mkdir -p ${project_dir}/deploy
-	-mkdir -p ${project_dir}/output
-	-cp -r ${project_dir}/deploy/* ${project_dir}/output/
 
 output/lib/libinvent.a : ${objs} init_dir
-	-ar cr output/lib/libinvent.a -o ${objs}
-	-cp -p ./src/interface.h output/include/
-	-cp -p ./src/impl.h output/include/
+	echo "hello"
 
-${build_dir}/src/impl.o : src/impl.cpp
-	g++ -c src/impl.cpp -o ${build_dir}/src/impl.o -I ./
-${build_dir}/src/interface.o : src/interface.cpp
-	g++ -c src/interface.cpp -o ${build_dir}/src/interface.o -I ./
+$(objs):%.o:%
+	g++ -c $< -o $@ -I ./
 
--include ${build_dir}/header.depend
-${build_dir}/header.depend : ${srcs}
-	g++ -MM ${srcs} > ${build_dir}/header.depend -I ./
+$(deps):%.d:%
+	g++ -MM $< -I ./ | sed 's, \(.*\.o\)[:]\(.*\), \1 : $@, g' > $@;
 
-.PHONY:clean
+include $(deps)
+
 clean:
-	-rm -fr output/ ${objs} ${build_dir}/header.depend
+	rm $(objs) $(deps)
